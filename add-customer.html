@@ -50,18 +50,27 @@
           email: inputs[6].value,
           phone: inputs[7].value,
         };
-        const response = await fetch(
-          "https://qa2.sunbasedata.com/sunbase/portal/api/assignment.jsp?" +
-            new URLSearchParams({
-              cmd: "create",
-            }),
-          {
-            body: data,
-            headers: {
-              Authorization: "Bearer " + token,
-            },
-          }
-        );
+        if (!data.first_name || !data.last_name) {
+          alert("First and Last Name are required Fields");
+          return;
+        }
+        try {
+          const response = await fetch(
+            "https://qa2.sunbasedata.com/sunbase/portal/api/assignment.jsp?" +
+              new URLSearchParams({
+                cmd: "create",
+              }),
+            {
+              method: "post",
+              body: data,
+              headers: {
+                Authorization: "Bearer " + token,
+              },
+            }
+          );
+        } catch (err) {
+          alert(err.message);
+        }
       }
     </script>
   </body>

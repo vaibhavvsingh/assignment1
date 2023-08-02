@@ -8,47 +8,23 @@ inputs.forEach((input) => {
 
 // getData
 async function getData() {
-  const response = await fetch(
-    "https://qa2.sunbasedata.com/sunbase/portal/api/assignment.jsp" +
-      new URLSearchParams({
-        cmd: "get_customers_list",
-      }),
-    {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    }
-  );
-  const data = await res.json();
+  try {
+    const response = await fetch(
+      "https://qa2.sunbasedata.com/sunbase/portal/api/assignment.jsp" +
+        new URLSearchParams({
+          cmd: "get_customers_list",
+        }),
+      {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      }
+    );
+    const data = await res.json();
 
-  //   const data = [
-  //     {
-  //       uuid: "1",
-  //       first_name: "John",
-  //       last_name: "Doe",
-  //       street: "Elvnu Street",
-  //       address: "H no 2 ",
-  //       city: "Delhi",
-  //       state: "Delhi",
-  //       email: "sam@gmail.com",
-  //       phone: "12345678",
-  //     },
-  //     {
-  //       uuid: "2",
-  //       first_name: "Jane",
-  //       last_name: "Doe",
-  //       street: "Elvnu Street",
-  //       address: "H no 2 ",
-  //       city: "Delhi",
-  //       state: "Delhi",
-  //       email: "sam@gmail.com",
-  //       phone: "12345678",
-  //     },
-  //   ];
-
-  data.forEach((item) => {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
+    data.forEach((item) => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
     <td>${item.first_name}</td>
     <td>${item.last_name}</td>
     <td>${item.street}</td>
@@ -62,10 +38,13 @@ async function getData() {
         <button id="${item.uuid}">Edit</button>
     </td>
     `;
-    table.appendChild(tr);
-    const updateBtn = document.getElementById(item.uuid);
-    updateBtn.addEventListener("click", () => updateCustomer(item));
-  });
+      table.appendChild(tr);
+      const updateBtn = document.getElementById(item.uuid);
+      updateBtn.addEventListener("click", () => updateCustomer(item));
+    });
+  } catch (err) {
+    alert(err.message);
+  }
 }
 getData();
 
@@ -91,22 +70,29 @@ function updateCustomer(item) {
       email: inputs[6].value,
       phone: inputs[7].value,
     };
-    const response = await fetch(
-      "https://qa2.sunbasedata.com/sunbase/portal/api/assignment.jsp" +
-        new URLSearchParams({
-          cmd: "update",
-          uuid: item.uuid,
-        }),
-      {
-        method: "post",
-        body: data,
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      }
-    );
-    const result = await response.json();
-    console.log(result);
+    if (!data.first_name || !data.last_name) {
+      alert("First and Last Name are required fields");
+    }
+    try {
+      const response = await fetch(
+        "https://qa2.sunbasedata.com/sunbase/portal/api/assignment.jsp" +
+          new URLSearchParams({
+            cmd: "update",
+            uuid: item.uuid,
+          }),
+        {
+          method: "post",
+          body: data,
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
+      const result = await response.json();
+      // console.log(result);
+    } catch (err) {
+      alert(err.message);
+    }
   };
 }
 
