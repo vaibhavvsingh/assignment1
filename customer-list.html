@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Customer List</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h2><a href="add-customer.html">Add Customer</a></h2>
+    <h1>Customer List</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Street</th>
+          <th>Address</th>
+          <th>City</th>
+          <th>State</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <section>
+      <h1>Update Customer</h1>
+      <div>
+        <input type="text" placeholder="First Name" />
+        <input type="text" placeholder="Last Name" />
+        <input type="text" placeholder="Street" />
+        <input type="text" placeholder="Address" />
+        <input type="text" placeholder="City" />
+        <input type="text" placeholder="State" />
+        <input type="email" placeholder="Email" />
+        <input type="tel" placeholder="Phone Number" />
+      </div>
+      <button style="width: 150px; margin-bottom: 20px" id="update-submit">
+        Submit
+      </button>
+    </section>
+    <script src="./customerList.js"></script>
+  </body>
+</html>

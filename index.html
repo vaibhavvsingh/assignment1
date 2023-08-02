@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign In</title>
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+        /* max-width: 300px; */
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+      input {
+        /* margin-top: 10px; */
+        margin-bottom: 20px;
+        font-size: 16px;
+      }
+      button {
+        font-size: 16px;
+        background-color: blueviolet;
+        color: white;
+        outline: none;
+        border: none;
+        border-radius: 5px;
+        padding: 5px 15px;
+      }
+      button:active {
+        background-color: rgb(109, 27, 187);
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Sign In</h1>
+    <input type="text" placeholder="Login ID" />
+    <input type="password" placeholder="Password" />
+    <button onclick="handleSubmit()">Submit</button>
+
+    <script>
+      const inputs = document.querySelectorAll("input");
+      async function handleSubmit() {
+        const body = {
+          login_id: inputs[0].value,
+          password: inputs[1].value,
+        };
+        const response = await fetch(
+          "https://qa2.sunbasedata.com/sunbase/portal/api/assignment_auth.jsp",
+          {
+            method: "post",
+            body: body,
+          }
+        );
+        const data = await response.json();
+        // const data = { access_token: "abc" };
+        localStorage.setItem("access_token", data?.access_token);
+        location.href = "customer-list.html";
+      }
+    </script>
+  </body>
+</html>

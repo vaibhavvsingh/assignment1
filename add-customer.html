@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Customer</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      body {
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    </style>
+  </head>
+  <body>
+    <h2><a href="customer-list.html">Customer List</a></h2>
+    <section>
+      <h1>Create a new Customer</h1>
+      <div>
+        <input type="text" placeholder="First Name" />
+        <input type="text" placeholder="Last Name" />
+        <input type="text" placeholder="Street" />
+        <input type="text" placeholder="Address" />
+        <input type="text" placeholder="City" />
+        <input type="text" placeholder="State" />
+        <input type="email" placeholder="Email" />
+        <input type="tel" placeholder="Phone Number" />
+      </div>
+      <button
+        style="margin-bottom: 20px; width: 150px"
+        onclick="handleSubmit()"
+      >
+        Submit
+      </button>
+    </section>
+
+    <script>
+      const inputs = document.querySelectorAll("input");
+      const token = localStorage.getItem("access_token");
+      async function handleSubmit() {
+        const data = {
+          first_name: inputs[0].value,
+          last_name: inputs[1].value,
+          street: inputs[2].value,
+          address: inputs[3].value,
+          city: inputs[4].value,
+          state: inputs[5].value,
+          email: inputs[6].value,
+          phone: inputs[7].value,
+        };
+        const response = await fetch(
+          "https://qa2.sunbasedata.com/sunbase/portal/api/assignment.jsp?" +
+            new URLSearchParams({
+              cmd: "create",
+            }),
+          {
+            body: data,
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+          }
+        );
+      }
+    </script>
+  </body>
+</html>
